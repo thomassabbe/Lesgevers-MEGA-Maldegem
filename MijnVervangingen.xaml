@@ -1,0 +1,68 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" xmlns:viewmodels="clr-namespace:Tractivity.ViewModels.Vervangingen" xmlns:models="clr-namespace:Tractivity.Models"
+             x:DataType="viewmodels:MijnVervangingenViewModel" xmlns:views="clr-namespace:Tractivity.Views.Vervangingen"
+             
+             x:Class="Tractivity.Views.Vervangingen.MijnVervangingen"  BackgroundColor="#1F1A24" >
+    <ContentPage.Content>
+        <CollectionView 
+        ItemsSource="{Binding MijnVervangingen}" HeightRequest="100" BackgroundColor="#1F1A24" SelectionMode="None">
+            <CollectionView.ItemTemplate>
+                <DataTemplate x:DataType="models:Vervanging">
+                    <ViewCell Height="500" >
+                        <ViewCell.ContextActions>
+                            <MenuItem x:DataType="models:Vervanging"
+                            Clicked="MenuItem_Clicked"
+                            Text="Details" ClassId="{Binding Id}" />
+                            <MenuItem x:DataType="models:Vervanging"
+                            Clicked="MenuItem_Clicked_Delete"
+                            Text="Verwijder Vervanging" ClassId="{Binding Id}"/>
+                        </ViewCell.ContextActions>
+
+                        <StackLayout Orientation="Horizontal"  HeightRequest="150" Padding="0,0,0,30" VerticalOptions="StartAndExpand" BackgroundColor="#1F1A24">
+                            <Label Text="{Binding datum_aangevraagd,StringFormat='{0:dd/MM/yy h:mm tt}'}" HorizontalOptions="Start" TextColor="White"
+                                        FontSize="Medium"
+                                        VerticalOptions="Center"  />
+                            <StackLayout Orientation="Vertical" HorizontalOptions="Start"  VerticalOptions="StartAndExpand" Padding="0,0,0,30" BackgroundColor="#1F1A24">
+                                <Label Text="Groep: " TextColor="White"
+                                            FontSize="Small"
+                                            VerticalOptions="Center" />
+                                <Label FontSize="Small" TextColor="White"
+                                            Text="{Binding groep}"
+                                            VerticalOptions="Center"/>
+                            </StackLayout>
+                            <StackLayout Orientation="Vertical" HorizontalOptions="Center" VerticalOptions="StartAndExpand" Padding="0,0,0,30" >
+                                <Label Text="Wie vervangt: " TextColor="White"
+                                            FontSize="Small"
+                                            VerticalOptions="Center" />
+                                <Label FontSize="Small" TextColor="White"
+                                            Text="{Binding vervanger}"
+                                            VerticalOptions="Center"/>
+                            </StackLayout>
+
+                        </StackLayout>
+
+                    </ViewCell>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+            <CollectionView.Header BackgroundColor="#1F1A24">
+                <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+
+                    <Label x:DataType="viewmodels:MijnVervangingenViewModel"
+                    Margin="20"
+                           
+                    HorizontalOptions="Center"
+                    Text="Mijn vervangingen" TextColor="White" FontSize="20">
+                    </Label>
+                    <Button Text="Ververs" Command="{Binding RefreshCommand}" FontSize="Small" TextColor="White" BackgroundColor="#3897f0" HeightRequest="15"/>
+                </StackLayout>
+            </CollectionView.Header>
+            <CollectionView.Footer BackgroundColor="#1F1A24">
+                <StackLayout HorizontalOptions="Center" Orientation="Horizontal">
+                    <Button 
+                    Text="Vraag vervanging aan" BackgroundColor="#01a6e6" TextColor="White" Clicked="Create_Vervanging_Clicked" Margin="40"/>
+                </StackLayout>
+            </CollectionView.Footer>
+        </CollectionView>
+    </ContentPage.Content>
+</ContentPage>
